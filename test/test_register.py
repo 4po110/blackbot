@@ -81,5 +81,5 @@ if __name__ == "__main__":
     emails, passwords = readEmails()
     proxies = readProxies()
 
-    for index in range(len(emails)):
+    for index in range(2):
         x = threading.Thread(target=register, args=(emails[index], passwords[index], proxies[index]))
