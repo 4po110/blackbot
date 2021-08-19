@@ -11,7 +11,7 @@ import mysql.connector
 from mysql.connector import errorcode
 
 from utils.genRandom import getRandomNumber
-from utils.signup import register
+from utils.signup import signup
 from utils.verify import verify
 
 def register(email, password, proxy_username, proxy_pwd, ip_address, port):
@@ -26,7 +26,7 @@ def register(email, password, proxy_username, proxy_pwd, ip_address, port):
     driver = webdriver.Chrome('./chromedriver', seleniumwire_options = proxy_options, chrome_options = chrome_options)
     driver.maximize_window()
 
-    if not register(driver, email, password):
+    if not signup(driver, email, password):
         return
 
     verify(driver, email, password)
