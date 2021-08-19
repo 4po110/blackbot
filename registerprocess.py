@@ -13,11 +13,14 @@ from mysql.connector import errorcode
 from utils.genRandom import getRandomNumber
 from utils.signup import signup
 from utils.verify import verify
+from utils.readAssets import readEmails, readProxies
 
-def register(email, password, proxy_username, proxy_pwd, ip_address, port):
+def register(email, password, proxy):
     proxy_options = {
         'proxy': {
-            'https': 'https://' + proxy_username + ':' + proxy_pwd + '@' + ip_address + ':' + port,
+            'https': 'https://' + proxy,
+            'http': 'http://' + proxy,
+            'no_proxy': 'localhost,127.0.0.1'
         }
     }
     chrome_options = webdriver.ChromeOptions()
@@ -30,6 +33,7 @@ def register(email, password, proxy_username, proxy_pwd, ip_address, port):
         return
 
     verify(driver, email, password)
+    driver.close()
 
     config = {
         'user': 'root',
@@ -71,10 +75,11 @@ def register(email, password, proxy_username, proxy_pwd, ip_address, port):
             cursor.execute(insert_stmt, data)
             cnx.commit()
             cnx.close()
-    driver.close()
 
 if __name__ == "__main__":
     threads = list()
-    for index in range(2):
-        logging.info("Main   : create and start thread %d.", index)
-        x = threading.Thread(target=register, args=(email, password, proxy))
+    emails, passwords = readEmails()
+    proxies = readProxies()
+
+    for index in range(len(emails)):
+        x = threading.Thread(target=register, args=(emails[index], passwords[index], proxies[index]))
