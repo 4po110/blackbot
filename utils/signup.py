@@ -5,7 +5,7 @@ import os
 
 from twocaptcha import TwoCaptcha
 
-from util.genRandom import getRandomNumber
+from utils.genRandom import getRandomNumber
 
 
 def signup(driver, email, password):

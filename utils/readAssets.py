@@ -19,7 +19,7 @@ def readProxies():
     proxies = list()
 
     for line in data:
-        [ip, port, user, pwd] = a.split(':')
+        [ip, port, user, pwd] = line.split(':')
         proxies.append(f'{user}:{pwd}@{ip}:{port}')
 
     return proxies

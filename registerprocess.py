@@ -4,7 +4,7 @@ import time
 import sys
 import os
 
-from selenimuwire import webdriver
+from seleniumwire import webdriver
 from twocaptcha import TwoCaptcha
 
 import mysql.connector
@@ -32,8 +32,11 @@ def register(email, password, proxy):
     if not signup(driver, email, password):
         return
 
-    verify(driver, email, password)
+    if not verify(driver, email, password):
+        return
+    print('------------------------123---------------------------')
     driver.close()
+    print('------------------------456---------------------------')
 
     config = {
         'user': 'root',
@@ -81,5 +84,13 @@ if __name__ == "__main__":
     emails, passwords = readEmails()
     proxies = readProxies()
 
-    for index in range(len(emails)):
+    for index in range(2):
         x = threading.Thread(target=register, args=(emails[index], passwords[index], proxies[index]))
+        threads.append(x)
+        x.start()
+        time.sleep(getRandomNumber(1, 10))
+
+    for index, thread in enumerate(threads):
+        logging.info("Main    : before joining thread %d.", index)
+        thread.join()
+        logging.info("Main    : thread %d done", index)

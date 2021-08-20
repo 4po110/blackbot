@@ -24,22 +24,21 @@ def verify(driver, email, password):
         time.sleep(2)
         driver.find_element_by_xpath('//*[@id="idSIButton9"]').click()
         print('Login Entered')
-
-        time.sleep(10)
-        driver.find_element_by_xpath('//*[@id="idBtn_Back"]').click()
-        time.sleep(7)
-        driver.execute_script('window.stop();')  #press escape to remove popup
-        time.sleep(7)
-        driver.find_element_by_xpath('//span[contains(text(),"Verify your CoinMarketCap account")]').click()
-        time.sleep(10)
-        parent_handle = driver.window_handles[0]
-        time.sleep(8)
-        driver.find_element_by_xpath('//a[normalize-space()="Click here to verify account"]').click()
-        time.sleep(8)
-        child_handle = [x for x in driver.window_handles if x != parent_handle][0]
-        driver.switch_to.window(child_handle)
-        time.sleep(5)
-
-        driver.get('https://httpbin.org/ip')
-        time.sleep(5)
-        driver.close()
+        try:
+            time.sleep(10)
+            driver.find_element_by_xpath('//*[@id="idBtn_Back"]').click()
+            time.sleep(7)
+            driver.execute_script('window.stop();')  #press escape to remove popup
+            time.sleep(7)
+            driver.find_element_by_xpath('//span[contains(text(),"Verify your CoinMarketCap account")]').click()
+            time.sleep(10)
+            parent_handle = driver.window_handles[0]
+            time.sleep(8)
+            driver.find_element_by_xpath('//a[normalize-space()="Click here to verify account"]').click()
+            time.sleep(8)
+            child_handle = [x for x in driver.window_handles if x != parent_handle][0]
+            driver.switch_to.window(child_handle)
+            time.sleep(5)
+        except:
+            return False
+        return True
