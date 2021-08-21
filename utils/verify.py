@@ -26,10 +26,20 @@ def verify(driver, email, password):
         print('Login Entered')
         time.sleep(10)
         try:
-            driver.find_element_by_xpath('//*[@id="idBtn_Back"]').click()
+            driver.find_element_by_id('iShowSkip').click()
+            time.sleep(10)
         except:
-            print('email verification needed')
-            return -1
+            pass
+
+        try:
+            driver.find_element_by_xpath('//*[@id="idBtn_Back"]').click()
+            time.sleep(10)
+        except:
+            pass
+        try:
+            driver.find_element_by_id('iCancel').click()
+        except:
+            pass
         time.sleep(40)
         print('logged in')
         try:

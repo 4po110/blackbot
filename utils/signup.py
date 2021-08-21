@@ -46,7 +46,7 @@ def signup(driver, email, password):
     passed = False
 
     try:
-        driver.find_element_by_id('vsELS')
+        driver.find_element_by_xpath('//div[contains(text(), "ve sent you an activation email")]')
     except:
         passed = False
     else:
@@ -63,8 +63,13 @@ def signup(driver, email, password):
             # excute callback function
             callback_js = f'___grecaptcha_cfg.clients[0].R.R.callback("{form_token}");'
             driver.execute_script(callback_js)
+            time.sleep(3)
         except:
             print('Recaptcha is not shown!')
             return False
         else:
+            try:
+                driver.find_element_by_xpath('//div[contains(text(), "ve sent you an activation email")]')
+            except:
+                return False
             return True
