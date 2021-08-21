@@ -14,6 +14,8 @@ from utils.genRandom import getRandomNumber
 from utils.signup import signup
 from utils.verify import verify
 from utils.readAssets import readEmails, readProxies
+from utils.database import getConnect, createEmailTable, registerEmail
+
 
 def register(email, password, proxy):
     proxy_options = {
@@ -29,55 +31,20 @@ def register(email, password, proxy):
     driver = webdriver.Chrome('./chromedriver', seleniumwire_options = proxy_options, chrome_options = chrome_options)
     driver.maximize_window()
 
+    cnx = getConnect()
+    createEmailTable(cnx)
+
     if not signup(driver, email, password):
+        registerEmail(cnx, email, password, proxy, 0)
         return
 
     if not verify(driver, email, password):
+        registerEmail(cnx, email, password, proxy, 0)
         return
-    print('------------------------123---------------------------')
+
+    registerEmail(cnx, email, password, proxy, 1)
+    cnx.close()
     driver.close()
-    print('------------------------456---------------------------')
-
-    config = {
-        'user': 'root',
-        'password': '',
-        'host': '127.0.0.1',
-        'port': 3306,
-        'database': 'coinmarketcap',
-        'raise_on_warnings': True
-    }
-
-    try:
-        cnx = mysql.connector.connect(**config)
-    except mysql.connector.Error as err:
-        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print('Something is wrong with your user name or password')
-        elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            print('Database does not exist')
-        else:
-            print(err)
-    else:
-        cursor = cnx.cursor(dictionary = True)
-        query1 = '''CREATE TABLE IF NOT EXISTS emails (
-                    id int PRIMARY KEY AUTO_INCREMENT,
-                    email varchar(250) NOT NULL,
-                    password varchar(250) NOT NULL,
-                    proxy varchar(250) NOT NULL,
-                    available int NOT NULL
-                )'''
-        try:
-            cursor.execute(query1)
-        except:
-            print("Table exists")
-        finally:
-            insert_stmt = (
-                'INSERT INTO emails(email, password, proxy, available)'
-                'VALUES (%s, %s, %s, %d)'
-            )
-            data = (email, password, proxy, 1)
-            cursor.execute(insert_stmt, data)
-            cnx.commit()
-            cnx.close()
 
 if __name__ == "__main__":
     threads = list()
@@ -85,7 +52,7 @@ if __name__ == "__main__":
     proxies = readProxies()
 
     for index in range(2):
-        x = threading.Thread(target=register, args=(emails[index], passwords[index], proxies[index]))
+        x = threading.Thread(target=register, args=(emails[index+6], passwords[index+6], proxies[index+6]))
         threads.append(x)
         x.start()
         time.sleep(getRandomNumber(1, 10))
