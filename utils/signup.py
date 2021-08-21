@@ -39,7 +39,6 @@ def signup(driver, email, password):
             form_token = result['code']
             break
     print('>>>>>>>: got a token!')
-    print(form_token)
 
     driver.find_element_by_class_name('ffwHVz').click()
     time.sleep(getRandomNumber(2, 6))

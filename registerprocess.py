@@ -40,8 +40,9 @@ def register(email, password, proxy):
         cnx.close()
         return
 
-    if not verify(driver, email, password):
-        registerEmail(cnx, email, password, proxy, 0)
+    code = verify(driver, email, password)
+    if code != 1:
+        registerEmail(cnx, email, password, proxy, code)
         cnx.commit()
         cnx.close()
         return
