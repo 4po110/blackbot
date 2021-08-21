@@ -53,7 +53,7 @@ def verify(driver, email, password):
         parent_handle = driver.window_handles[0]
         time.sleep(1)
         driver.find_element_by_xpath('//a[normalize-space()="Click here to verify account"]').click()
-        time.sleep(15)
+        time.sleep(30)
         child_handle = [x for x in driver.window_handles if x != parent_handle][0]
         driver.switch_to.window(child_handle)
         time.sleep(5)
