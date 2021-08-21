@@ -9,7 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def verify(driver, email, password):
 
     driver.get('https://outlook.office365.com/mail/inbox')
-    time.sleep(15)
+    time.sleep(20)
 
     try:
         element = WebDriverWait(driver, 120).until
@@ -19,12 +19,12 @@ def verify(driver, email, password):
         driver.find_element_by_css_selector('input[type="email"]').send_keys(email)
         time.sleep(1)
         driver.find_element_by_css_selector('input[type="submit"]').click()
-        time.sleep(10)
+        time.sleep(15)
         driver.find_element_by_css_selector('input[type="password"]').send_keys(password) #passwordBrowserPrefill
         time.sleep(1)
         driver.find_element_by_css_selector('input[type="submit"]').click()
         print('Login Entered')
-        time.sleep(10)
+        time.sleep(15)
         try:
             driver.find_element_by_id('iShowSkip').click()
             time.sleep(10)
