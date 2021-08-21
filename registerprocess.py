@@ -59,11 +59,14 @@ if __name__ == "__main__":
     while True:
         threads = list()
         for index in range(10):
+            if count > len(emails) - 1:
+                break
             x = threading.Thread(target=register, args=(emails[index+6], passwords[index+6], proxies[index+6]))
             threads.append(x)
             x.start()
             count+=1
             time.sleep(getRandomNumber(4, 10))
+        
 
         for index, thread in enumerate(threads):
             logging.info("Main    : before joining thread %d.", index)
