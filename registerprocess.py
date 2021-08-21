@@ -65,7 +65,7 @@ if __name__ == "__main__":
             threads.append(x)
             x.start()
             count+=1
-            time.sleep(getRandomNumber(4, 10))
+            time.sleep(getRandomNumber(10, 20))
         
 
         for index, thread in enumerate(threads):
