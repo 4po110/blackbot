@@ -9,7 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def verify(driver, email, password):
 
     driver.get('https://outlook.office365.com/mail/inbox')
-    time.sleep(10)
+    time.sleep(15)
 
     try:
         element = WebDriverWait(driver, 120).until
@@ -30,13 +30,13 @@ def verify(driver, email, password):
         except:
             print('email verification needed')
             return -1
-        time.sleep(30)
+        time.sleep(40)
         print('logged in')
         try:
             driver.find_element_by_class_name('ms-Dialog-button--close').click()  #press escape to remove popup
         except:
             pass
-        time.sleep(7)
+        time.sleep(10)
         print('removed popup')
         driver.find_element_by_xpath('//span[contains(text(),"Verify your CoinMarketCap account")]').click()
         time.sleep(5)
