@@ -36,6 +36,7 @@ def getConnect():
             print(err)
 
 def registerEmail(cnx, email, password, proxy, value):
+    print("register email")
     cursor = cnx.cursor(dictionary = True)
     query = f"INSERT INTO emails(email, password, proxy, available) VALUES ('{email}', '{password}', '{proxy}', {value})"
     cursor.execute(query)

@@ -24,7 +24,7 @@ def verify(driver, email, password):
         time.sleep(1)
         driver.find_element_by_css_selector('input[type="submit"]').click()
         print('Login Entered')
-        time.sleep(5)
+        time.sleep(10)
         driver.find_element_by_xpath('//*[@id="idBtn_Back"]').click()
         time.sleep(30)
         print('logged in')
