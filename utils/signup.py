@@ -11,10 +11,10 @@ from utils.genRandom import getRandomNumber
 def signup(driver, email, password):
 
     driver.get('https://coinmarketcap.com')
-    time.sleep(getRandomNumber(2, 6))
+    time.sleep(3)
 
     driver.find_element_by_class_name('cEEOTh').click()
-    time.sleep(getRandomNumber(2, 6))
+    time.sleep(3)
 
     driver.find_element_by_css_selector('input[type="email"]').send_keys(email)
     driver.find_element_by_css_selector('input[type="password"]').send_keys(password)
@@ -41,7 +41,7 @@ def signup(driver, email, password):
     print('>>>>>>>: got a token!')
 
     driver.find_element_by_class_name('ffwHVz').click()
-    time.sleep(getRandomNumber(2, 6))
+    time.sleep(3)
 
     passed = False
 
@@ -57,7 +57,7 @@ def signup(driver, email, password):
         write_token_js = f'document.getElementById("g-recaptcha-response").innerHTML = "{form_token}";'
         driver.execute_script(write_token_js)        
 
-        time.sleep(getRandomNumber(2, 4))
+        time.sleep(3)
 
         try:
             # excute callback function
