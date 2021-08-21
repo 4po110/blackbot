@@ -53,17 +53,19 @@ def register(email, password, proxy):
     driver.close()
 
 if __name__ == "__main__":
-    threads = list()
     emails, passwords = readEmails()
     proxies = readProxies()
+    count = 0
+    while True:
+        threads = list()
+        for index in range(10):
+            x = threading.Thread(target=register, args=(emails[index+6], passwords[index+6], proxies[index+6]))
+            threads.append(x)
+            x.start()
+            count+=1
+            time.sleep(getRandomNumber(4, 10))
 
-    for index in range(2):
-        x = threading.Thread(target=register, args=(emails[index+6], passwords[index+6], proxies[index+6]))
-        threads.append(x)
-        x.start()
-        time.sleep(getRandomNumber(1, 10))
-
-    for index, thread in enumerate(threads):
-        logging.info("Main    : before joining thread %d.", index)
-        thread.join()
-        logging.info("Main    : thread %d done", index)
+        for index, thread in enumerate(threads):
+            logging.info("Main    : before joining thread %d.", index)
+            thread.join()
+            logging.info("Main    : thread %d done", index)
