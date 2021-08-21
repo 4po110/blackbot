@@ -46,13 +46,13 @@ def verify(driver, email, password):
             driver.find_element_by_class_name('ms-Dialog-button--close').click()  #press escape to remove popup
         except:
             pass
-        time.sleep(10)
+        time.sleep(20)
         print('removed popup')
         try:
             driver.find_element_by_xpath('//div[contains(@role,"listbox")]/div/div/div[1]/div/div').click()
         except:
             driver.find_element_by_xpath('//span[contains(text(),"Verify your CoinMarketCap account")]').click()
-        time.sleep(5)
+        time.sleep(30)
         parent_handle = driver.window_handles[0]
         time.sleep(1)
         driver.find_element_by_xpath('//a[normalize-space()="Click here to verify account"]').click()
