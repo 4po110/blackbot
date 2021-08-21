@@ -50,7 +50,7 @@ def signup(driver, email, password):
     except:
         passed = False
     else:
-        passed = True
+        return True
     
     if not passed:
         # put the token in the textarea
