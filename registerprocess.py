@@ -36,13 +36,18 @@ def register(email, password, proxy):
 
     if not signup(driver, email, password):
         registerEmail(cnx, email, password, proxy, 0)
+        cnx.commit()
+        cnx.close()
         return
 
     if not verify(driver, email, password):
         registerEmail(cnx, email, password, proxy, 0)
+        cnx.commit()
+        cnx.close()
         return
 
     registerEmail(cnx, email, password, proxy, 1)
+    cnx.commit()
     cnx.close()
     driver.close()
 
