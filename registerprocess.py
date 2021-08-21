@@ -61,7 +61,7 @@ if __name__ == "__main__":
         for index in range(10):
             if count > len(emails) - 1:
                 break
-            x = threading.Thread(target=register, args=(emails[index+6], passwords[index+6], proxies[index+6]))
+            x = threading.Thread(target=register, args=(emails[count], passwords[count], proxies[count]))
             threads.append(x)
             x.start()
             count+=1
