@@ -25,7 +25,7 @@ def readProxies():
     return proxies
 
 def readFmail():
-    with open('database/femails.txt', 'r'):
+    with open('database/femails.txt', 'r') as f:
         data = f.read()
     
     data = data.split('\n')

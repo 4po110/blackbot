@@ -13,7 +13,7 @@ def signup(driver, email, password):
     driver.get('https://coinmarketcap.com')
     time.sleep(3)
 
-    driver.find_element_by_class_name('cEEOTh').click()
+    driver.find_element_by_xpath('//button[contains(text(), "Log In")]').click()
     time.sleep(3)
 
     driver.find_element_by_css_selector('input[type="email"]').send_keys(email)
@@ -42,33 +42,19 @@ def signup(driver, email, password):
     driver.find_element_by_class_name('ffwHVz').click()
     time.sleep(3)
 
-    passed = False
+        # put the token in the textarea
+    write_token_js = f'document.getElementById("g-recaptcha-response").innerHTML = "{form_token}";'
+    driver.execute_script(write_token_js)        
+
+    time.sleep(3)
 
     try:
-        driver.find_element_by_xpath('//div[contains(text(), "ve sent you an activation email")]')
+        # excute callback function
+        callback_js = f'___grecaptcha_cfg.clients[0].R.R.callback("{form_token}");'
+        driver.execute_script(callback_js)
+        time.sleep(3)
     except:
-        passed = False
+        print('Recaptcha is not shown!')
+        return False
     else:
         return True
-    
-    if not passed:
-        # put the token in the textarea
-        write_token_js = f'document.getElementById("g-recaptcha-response").innerHTML = "{form_token}";'
-        driver.execute_script(write_token_js)        
-
-        time.sleep(3)
-
-        try:
-            # excute callback function
-            callback_js = f'___grecaptcha_cfg.clients[0].R.R.callback("{form_token}");'
-            driver.execute_script(callback_js)
-            time.sleep(3)
-        except:
-            print('Recaptcha is not shown!')
-            return False
-        else:
-            try:
-                driver.find_element_by_xpath('//div[contains(text(), "ve sent you an activation email")]')
-            except:
-                return False
-            return True

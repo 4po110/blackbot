@@ -43,6 +43,10 @@ def verify(driver, email, password):
         time.sleep(40)
         print('logged in')
         try:
+            driver.find_element_by_xpath('//span[contains(text(),"Okay and continue to site")]').click()
+        except:
+            pass
+        try:
             driver.find_element_by_class_name('ms-Dialog-button--close').click()  #press escape to remove popup
         except:
             pass

@@ -5,11 +5,23 @@ from utils import getRandomNumber, getRandomBool, getRandomLetter, generateFakeA
 
 def action():
 
-    driver = webdriver.Chrome('./chromedriver')
+    proxy_options = {
+        'proxy': {
+            'https': 'https://' + proxy,
+            'http': 'http://' + proxy,
+            'no_proxy': 'localhost,127.0.0.1'
+        }
+    }
+    chrome_options = webdriver.ChromeOptions()
 
-    fNumber1 = getRandomNumber(1, 2) # the number of fake activity before main activities
-    mNumber = getRandomNumber(15, 30) # the number of main activity that affects trending ranking
-    fNumber2 = getRandomNumber(0, 30) # the number of fake activity after main activities
+    driver = webdriver.Chrome('./chromedriver', seleniumwire_options = proxy_options, chrome_options = chrome_options)
+    driver.maximize_window()
+
+    cnx = getConnect()
+
+    fNumber1 = getRandomNumber(0, 10) # the number of fake activity before main activities
+    mNumber = getRandomNumber(5, 10) # the number of main activity that affects trending ranking
+    fNumber2 = getRandomNumber(0, 10) # the number of fake activity after main activities
 
     fActivities1 = generateFakeActivities(fNumber1) # the order of fake activities before main
     # mActivities = generateMainActivities(mNumber) # the order of main activities
