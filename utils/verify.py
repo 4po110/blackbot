@@ -48,6 +48,13 @@ def verify(driver, email, password):
             pass
         time.sleep(20)
         print('removed popup')
+
+        try:
+            driver.find_element_by_xpath('//span[contains(text(),"Welcome to CoinMarketCap!")]')
+        except:
+            pass
+        else:
+            return 1
         try:
             driver.find_element_by_xpath('//div[contains(@role,"listbox")]/div/div/div[1]/div/div').click()
         except:
