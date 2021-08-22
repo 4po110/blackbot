@@ -57,7 +57,7 @@ if __name__ == "__main__":
     count = 0
     while True:
         threads = list()
-        for index in range(6):
+        for index in range(3):
             if count > len(emails) - 1:
                 break
             x = threading.Thread(target=register, args=(emails[count], passwords[count], proxies[count]))

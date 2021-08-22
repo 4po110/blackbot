@@ -51,14 +51,11 @@ def verify(driver, email, password):
 
         try:
             driver.find_element_by_xpath('//span[contains(text(),"Welcome to CoinMarketCap!")]')
-        except:
-            pass
-        else:
             return 1
-        try:
-            driver.find_element_by_xpath('//div[contains(@role,"listbox")]/div/div/div[1]/div/div').click()
         except:
-            driver.find_element_by_xpath('//span[contains(text(),"Verify your CoinMarketCap account")]').click()
+            pass            
+        
+        driver.find_element_by_xpath('//span[contains(text(),"Verify your CoinMarketCap account")]').click()
         time.sleep(30)
         parent_handle = driver.window_handles[0]
         time.sleep(1)
