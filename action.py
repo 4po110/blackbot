@@ -24,10 +24,10 @@ def action():
     fNumber2 = getRandomNumber(0, 10) # the number of fake activity after main activities
 
     fActivities1 = generateFakeActivities(fNumber1) # the order of fake activities before main
-    # mActivities = generateMainActivities(mNumber) # the order of main activities
-    # fActivities2 = generateFakeActivities(fNumber2) # the order of fake activities after main
+    mActivities = generateMainActivities(mNumber) # the order of main activities
+    fActivities2 = generateFakeActivities(fNumber2) # the order of fake activities after main
 
-    Activities = fActivities1 # + mActivities + fActivities2
+    Activities = fActivities1 + mActivities + fActivities2
 
     for type, act, delay in Activities:
         if type == 'page':
