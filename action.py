@@ -41,10 +41,9 @@ def action(token, email, password, proxy, no_proxy=False):
             action = webdriver.ActionChains(driver)
             tag, attr, value = act.split(',')
 
-            driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight/2));")
-            time.sleep(3)
-
             if not value in ['+2%', 'bgsJxO']:
+                driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight/2));")
+                time.sleep(3)
                 driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight));")
                 time.sleep(3)
 
@@ -53,7 +52,12 @@ def action(token, email, password, proxy, no_proxy=False):
                 action.move_to_element(element).click().perform()
             elif attr == 'text':
                 element = driver.find_element_by_xpath(f'//{tag}[contains(text(),"{value}")]')
-                action.move_to_element(element).click().perform()
+                if value == 'Submit estimate':
+                    driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight/2));")
+                    time.sleep(1)
+                    element.click()
+                else:
+                    action.move_to_element(element).click().perform()
             else:
                 element = driver.find_element_by_css_selector(f'{tag}[{attr}="{value}"]')
                 action.move_to_element(element).click().perform()
