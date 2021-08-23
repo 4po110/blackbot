@@ -9,20 +9,24 @@ from utils.readAssets import readEmails, readProxies
 if __name__ == "__main__":
     emails, passwords = readEmails()
     proxies = readProxies()
+
+    sh = [x for x in range(len(proxies))]
+    shuffle(sh)
+
     threads = list()
     count = 0
     while True:
         threads = list()
-        for index in range(1):
+        for index in range(3):
             if count > len(proxies) - 1:
                 break
             if count > len(emails) - 1:
                 email = 'None'
                 password = 'None'
             else:
-                email = emails[count]
-                password = passwords[count]
-            x = threading.Thread(target=action, args=('poocoin', email, password, proxies[count]))
+                email = emails[sh[count]]
+                password = passwords[sh[count]]
+            x = threading.Thread(target=action, args=('poocoin', email, password, proxies[sh[count]]))
             threads.append(x)
             x.start()
             count+=1
