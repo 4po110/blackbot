@@ -37,13 +37,17 @@ def action(token, email, password, proxy, no_proxy=False):
         if type == 'page':
             driver.get(act)
         if type == 'click':
+            action = webdriver.ActionChains(driver)
             tag, attr, value = act.split(',')
             if attr == 'class':
-                driver.find_element_by_class_name(value).click()
+                element = driver.find_element_by_class_name(value)
+                action.move_to_element(element).click().perform()
             elif attr == 'text':
-                driver.find_element_by_xpath(f'//{tag}[contains(text(),"{value}")]').click()
+                element = driver.find_element_by_xpath(f'//{tag}[contains(text(),"{value}")]')
+                action.move_to_element(element).click().perform()
             else:
-                driver.find_element_by_css_selector(f'{tag}[{attr}="{value}"]').click()
+                element = driver.find_element_by_css_selector(f'{tag}[{attr}="{value}"]')
+                action.move_to_element(element).click().perform()
         if type == 'search':
             for i in range(len(act)):
                 driver.find_element_by_class_name('bzyaeu-3').send_keys(act[i])
