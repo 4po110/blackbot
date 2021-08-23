@@ -14,9 +14,15 @@ if __name__ == "__main__":
     while True:
         threads = list()
         for index in range(1):
-            if count > len(emails) - 1:
+            if count > len(proxies) - 1:
                 break
-            x = threading.Thread(target=action, args=('poocoin', emails[count], passwords[count], proxies[count]))
+            if count > len(emails) - 1:
+                email = 'None'
+                password = 'None'
+            else:
+                email = emails[count]
+                password = passwords[count]
+            x = threading.Thread(target=action, args=('poocoin', email, password, proxies[count]))
             threads.append(x)
             x.start()
             count+=1

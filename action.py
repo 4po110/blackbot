@@ -19,8 +19,10 @@ def action(token, email, password, proxy, no_proxy=False):
     else:
         driver = webdriver.Chrome('./chromedriver', chrome_options = chrome_options)
     driver.maximize_window()
-
-    islogged = login(driver, email, password)
+    if email == 'None':
+        islogged = False
+    else:
+        islogged = login(driver, email, password)
 
     fNumber1 = getRandomNumber(0, 10) # the number of fake activity before main activities
     mNumber = getRandomNumber(5, 10) # the number of main activity that affects trending ranking
@@ -67,9 +69,12 @@ def action(token, email, password, proxy, no_proxy=False):
             except:
                 pass
         if type == 'search':
-            for i in range(len(act)):
-                driver.find_element_by_class_name('bzyaeu-3').send_keys(act[i])
-                time.sleep(getRandomNumber(8, 50)/100)
+            try:
+                for i in range(len(act)):
+                    driver.find_element_by_class_name('bzyaeu-3').send_keys(act[i])
+                    time.sleep(getRandomNumber(8, 50)/100)
+            except:
+                pass
         print('ok')
         time.sleep(delay)
 
