@@ -52,6 +52,10 @@ def action(token, email, password, proxy, no_proxy=False):
                 action.move_to_element(element).click().perform()
             elif attr == 'text':
                 element = driver.find_element_by_xpath(f'//{tag}[contains(text(),"{value}")]')
+                if value == 'Submit estimate':
+                    height = element.location
+                    driver.execute_script(f"window.scrollTo(0, {height['y']-300});")
+                    element.click()
                 if value in ['+2%', 'bgsJxO']:
                     element.click()
                 else:
