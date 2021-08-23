@@ -70,6 +70,7 @@ def action(token, email, password, proxy, no_proxy=False):
             for i in range(len(act)):
                 driver.find_element_by_class_name('bzyaeu-3').send_keys(act[i])
                 time.sleep(getRandomNumber(8, 50)/100)
+        print('ok')
         time.sleep(delay)
 
 if __name__ == "__main__":
