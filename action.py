@@ -37,13 +37,16 @@ def action(token, email, password, proxy, no_proxy=False):
         if type == 'page':
             driver.get(act)
         if type == 'click':
-            driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight/2));")
-            time.sleep(3)
-            driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight));")
-            time.sleep(3)
-
+            
             action = webdriver.ActionChains(driver)
             tag, attr, value = act.split(',')
+
+            if not value in ['+2%', 'bgsJxO']:
+                driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight/2));")
+                time.sleep(3)
+                driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight));")
+                time.sleep(3)
+
             if attr == 'class':
                 element = driver.find_element_by_class_name(value)
                 action.move_to_element(element).click().perform()
