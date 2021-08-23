@@ -1,6 +1,7 @@
 import logging
 import threading
 import time
+from random import shuffle
 
 from action import action
 from utils.genRandom import getRandomNumber
