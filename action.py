@@ -1,9 +1,10 @@
 import time
-from selenium import webdriver
+from seleniumwire import webdriver
 
-from utils import getRandomNumber, getRandomBool, getRandomLetter, generateFakeActivities, generateMainActivities
+from utils.login import login
+from utils.genRandom import getRandomNumber, getRandomBool, getRandomLetter, generateFakeActivities, generateMainActivities
 
-def action():
+def action(token, email, password, proxy, no_proxy=False):
 
     proxy_options = {
         'proxy': {
@@ -13,38 +14,38 @@ def action():
         }
     }
     chrome_options = webdriver.ChromeOptions()
-
-    driver = webdriver.Chrome('./chromedriver', seleniumwire_options = proxy_options, chrome_options = chrome_options)
+    if not no_proxy:
+        driver = webdriver.Chrome('./chromedriver', seleniumwire_options = proxy_options, chrome_options = chrome_options)
+    else:
+        driver = webdriver.Chrome('./chromedriver', chrome_options = chrome_options)
     driver.maximize_window()
 
-    cnx = getConnect()
+    islogged = login(driver, email, password)
 
     fNumber1 = getRandomNumber(0, 10) # the number of fake activity before main activities
     mNumber = getRandomNumber(5, 10) # the number of main activity that affects trending ranking
     fNumber2 = getRandomNumber(0, 10) # the number of fake activity after main activities
 
-    fActivities1 = generateFakeActivities(fNumber1) # the order of fake activities before main
-    mActivities = generateMainActivities(mNumber) # the order of main activities
-    fActivities2 = generateFakeActivities(fNumber2) # the order of fake activities after main
+    fActivities1 = generateFakeActivities(fNumber1, islogged) # the order of fake activities before main
+    mActivities = generateMainActivities(token, mNumber, islogged) # the order of main activities
+    fActivities2 = generateFakeActivities(fNumber2, islogged) # the order of fake activities after main
 
     Activities = fActivities1 + mActivities + fActivities2
 
     for type, act, delay in Activities:
+        print((type, act, delay))
         if type == 'page':
             driver.get(act)
         if type == 'click':
-            driver.find_element_by_class_name(act).click()
+            tag, attr, value = act.split(',')
+            if attr == 'class':
+                driver.find_element_by_class_name(value).click()
+            elif attr == 'text':
+                driver.find_element_by_xpath(f'//{tag}[contains(text(),"{value}")]').click()
+            else:
+                driver.find_element_by_css_selector(f'{tag}[{attr}="{value}"]').click()
         if type == 'search':
-            if getRandomBool() == 1: # enable wrong character
-                for i in range(len(act)):
-                    driver.find_element_by_class_name('').send_keys(act[:i+1])
-                    time.sleep(getRandomNumber(8, 50)/100)
-                    driver.find_element_by_class_name('').send_keys(act[:i+1] + getRandomLetter())
-                    time.sleep(getRandomNumber(8, 50)/100)
-                    driver.find_element_by_class_name('').send_keys(act[:i+1])
-                    time.sleep(getRandomNumber(8, 50)/100)
-            else: # disable wrong character
-                for i in range(len(act)):
-                    driver.find_element_by_class_name('').send_keys(act[:i+1])
-                    time.sleep(getRandomNumber(8, 50)/100)
+            for i in range(len(act)):
+                driver.find_element_by_class_name('bzyaeu-3').send_keys(act[i])
+                time.sleep(getRandomNumber(8, 50)/100)
         time.sleep(delay)

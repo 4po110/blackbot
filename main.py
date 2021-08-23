@@ -3,19 +3,27 @@ import threading
 import time
 
 from action import action
-from utils import getRandomNumber
+from utils.genRandom import getRandomNumber
+from utils.readAssets import readEmails, readProxies
 
 if __name__ == "__main__":
-
+    emails, passwords = readEmails()
+    proxies = readProxies()
     threads = list()
-    for index in range(2):
-        logging.info("Main    : create and start thread %d.", index)
-        x = threading.Thread(target=action)
-        threads.append(x)
-        x.start()
-        time.sleep(getRandomNumber(1, 10))
+    count = 0
+    while True:
+        threads = list()
+        for index in range(1):
+            if count > len(emails) - 1:
+                break
+            x = threading.Thread(target=action, args=('poocoin', emails[count], passwords[count], proxies[count]))
+            threads.append(x)
+            x.start()
+            count+=1
+            time.sleep(20)
+        
 
-    for index, thread in enumerate(threads):
-        logging.info("Main    : before joining thread %d.", index)
-        thread.join()
-        logging.info("Main    : thread %d done", index)
+        for index, thread in enumerate(threads):
+            logging.info("Main    : before joining thread %d.", index)
+            thread.join()
+            logging.info("Main    : thread %d done", index)

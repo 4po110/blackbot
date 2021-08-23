@@ -8,7 +8,7 @@ from twocaptcha import TwoCaptcha
 from utils.genRandom import getRandomNumber
 
 
-def signup(driver, email, password):
+def login(driver, email, password):
 
     driver.get('https://coinmarketcap.com')
     time.sleep(3)
