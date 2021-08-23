@@ -37,6 +37,11 @@ def action(token, email, password, proxy, no_proxy=False):
         if type == 'page':
             driver.get(act)
         if type == 'click':
+            driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight/2));")
+            time.sleep(3)
+            driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight));")
+            time.sleep(3)
+
             action = webdriver.ActionChains(driver)
             tag, attr, value = act.split(',')
             if attr == 'class':
