@@ -47,8 +47,9 @@ def generateMainActivities(token, mn, islogged):
                 if clicks[j] == "button,text,Submit estimate":
                     if not islogged:
                         continue
+                    ph = ['+2%', '+5%', '+10%']
                     series.append(('click', clicks[j], getRandomNumber(5, 10)))
-                    series.append(('click', 'button,text,+2%', getRandomNumber(5, 10)))
+                    series.append(('click', f'button,text,{ph[getRandomNumber(0, 3)]}', getRandomNumber(5, 10)))
                     series.append(('click', 'button,class,bgsJxO', getRandomNumber(5, 10)))
                 else:
                     series.append(('click', clicks[j], getRandomNumber(5, 10)))

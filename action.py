@@ -38,31 +38,34 @@ def action(token, email, password, proxy, no_proxy=False):
             driver.get(act)
         if type == 'click':
             
-            action = webdriver.ActionChains(driver)
-            tag, attr, value = act.split(',')
+            try:
+                action = webdriver.ActionChains(driver)
+                tag, attr, value = act.split(',')
 
-            if not value in ['+2%', 'bgsJxO']:
-                driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight/2));")
-                time.sleep(3)
-                driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight));")
-                time.sleep(3)
+                if not value in ['+2%', '+5%', '+10%', 'bgsJxO']:
+                    driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight/2));")
+                    time.sleep(2)
+                    driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight));")
+                    time.sleep(2)
 
-            if attr == 'class':
-                element = driver.find_element_by_class_name(value)
-                action.move_to_element(element).click().perform()
-            elif attr == 'text':
-                element = driver.find_element_by_xpath(f'//{tag}[contains(text(),"{value}")]')
-                if value == 'Submit estimate':
-                    height = element.location
-                    driver.execute_script(f"window.scrollTo(0, {height['y']-300});")
-                    element.click()
-                if value in ['+2%', 'bgsJxO']:
-                    element.click()
-                else:
+                if attr == 'class':
+                    element = driver.find_element_by_class_name(value)
                     action.move_to_element(element).click().perform()
-            else:
-                element = driver.find_element_by_css_selector(f'{tag}[{attr}="{value}"]')
-                action.move_to_element(element).click().perform()
+                elif attr == 'text':
+                    element = driver.find_element_by_xpath(f'//{tag}[contains(text(),"{value}")]')
+                    if value == 'Submit estimate':
+                        height = element.location
+                        driver.execute_script(f"window.scrollTo(0, {height['y']-300});")
+                        element.click()
+                    if value in ['+2%', '+5%', '+10%', 'bgsJxO']:
+                        element.click()
+                    else:
+                        action.move_to_element(element).click().perform()
+                else:
+                    element = driver.find_element_by_css_selector(f'{tag}[{attr}="{value}"]')
+                    action.move_to_element(element).click().perform()
+            except:
+                pass
         if type == 'search':
             for i in range(len(act)):
                 driver.find_element_by_class_name('bzyaeu-3').send_keys(act[i])
