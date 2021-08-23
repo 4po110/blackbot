@@ -46,16 +46,13 @@ def action(token, email, password, proxy, no_proxy=False):
                 time.sleep(3)
                 driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight));")
                 time.sleep(3)
-            if value == 'Submit estimate':
-                driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight/2));")
-                time.sleep(1)
 
             if attr == 'class':
                 element = driver.find_element_by_class_name(value)
                 action.move_to_element(element).click().perform()
             elif attr == 'text':
                 element = driver.find_element_by_xpath(f'//{tag}[contains(text(),"{value}")]')
-                if value in ['Submit estimate', '+2%', 'bgsJxO']:
+                if value in ['+2%', 'bgsJxO']:
                     element.click()
                 else:
                     action.move_to_element(element).click().perform()
