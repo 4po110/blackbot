@@ -11,7 +11,7 @@ from utils.genRandom import getRandomNumber
 def login(driver, email, password):
 
     driver.get('https://coinmarketcap.com')
-    time.sleep(3)
+    time.sleep(5)
 
     driver.find_element_by_xpath('//button[contains(text(), "Log In")]').click()
     time.sleep(3)
