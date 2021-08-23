@@ -21,7 +21,7 @@ if __name__ == "__main__":
         for index in range(3):
             if count > len(proxies) - 1:
                 break
-            if count > len(emails) - 1:
+            if sh[count] > len(emails) - 1:
                 email = 'None'
                 password = 'None'
             else:
