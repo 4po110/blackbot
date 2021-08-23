@@ -46,6 +46,9 @@ def action(token, email, password, proxy, no_proxy=False):
                 time.sleep(3)
                 driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight));")
                 time.sleep(3)
+            if value == 'Submit estimate':
+                driver.execute_script("window.scrollTo(0, Math.round(document.body.scrollHeight/2));")
+                time.sleep(1)
 
             if attr == 'class':
                 element = driver.find_element_by_class_name(value)
