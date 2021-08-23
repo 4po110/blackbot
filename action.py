@@ -53,3 +53,6 @@ def action(token, email, password, proxy, no_proxy=False):
                 driver.find_element_by_class_name('bzyaeu-3').send_keys(act[i])
                 time.sleep(getRandomNumber(8, 50)/100)
         time.sleep(delay)
+
+if __name__ == "__main__":
+    action('poocoin', 'qcryptobase@gmail.com', 'tiger1019', '0', True)
