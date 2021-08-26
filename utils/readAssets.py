@@ -1,7 +1,7 @@
 from utils.util import getUrl
 
 def readEmails():
-    with open('database/newemails.txt', 'r') as f:
+    with open('database/emails.txt', 'r') as f:
         data = f.read()
     data = data.split('\n')
     emails = list()
