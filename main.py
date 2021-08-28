@@ -18,7 +18,7 @@ if __name__ == "__main__":
     count = 0
     while True:
         threads = list()
-        for index in range(3):
+        for index in range(5):
             if count > len(proxies) - 1:
                 break
             if sh[count] > len(emails) - 1:
@@ -31,7 +31,7 @@ if __name__ == "__main__":
             threads.append(x)
             x.start()
             count+=1
-            time.sleep(20)
+            time.sleep(30)
         
 
         for index, thread in enumerate(threads):
