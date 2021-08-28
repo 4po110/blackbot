@@ -60,7 +60,7 @@ def signup(driver, email, password):
 
         try:
             # excute callback function
-            callback_js = f'___grecaptcha_cfg.clients[0].R.R.callback("{form_token}");'
+            callback_js = f'___grecaptcha_cfg.clients[0].G.G.callback("{form_token}");'
             driver.execute_script(callback_js)
             time.sleep(3)
         except:
